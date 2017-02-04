@@ -25,7 +25,6 @@ public class HostUtils {
             url = new URL(link);
 
             HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-            urlc.setRequestProperty("Connection", "close");
             urlc.setConnectTimeout(1000 * 20);
 
             starTime = System.currentTimeMillis();
@@ -35,9 +34,8 @@ public class HostUtils {
 
             isReachable = (urlc.getResponseCode() == 200);
 
-
-            System.out.println("ResponseTime: " + execTime);
-            System.out.println("isReachable: " + isReachable);
+//            System.out.println("ResponseTime: " + execTime);
+//            System.out.println("isReachable: " + isReachable);
         } catch (IOException e) {
 
         }
@@ -66,6 +64,7 @@ public class HostUtils {
         for(Map.Entry<String, List<PingResult>> entry : pingMap.entrySet()) {
             long timeSumm = 0;
             int reached = 0;
+            int requestCount;
 
             String ip = entry.getKey();
             List<PingResult> pingResults = entry.getValue();
@@ -77,7 +76,9 @@ public class HostUtils {
                     reached ++;
                 }
             }
-            result.put(ip, new Statistic(timeSumm/pingResults.size(), (reached * 100)/pingResults.size() ));
+
+            requestCount = pingResults.size();
+            result.put(ip, new Statistic(timeSumm/requestCount, (requestCount - reached )/requestCount * 100));
         }
         return result;
     }
@@ -88,7 +89,7 @@ public class HostUtils {
 
             System.out.println("==============Result==============");
             System.out.println("IP: " + entry.getKey());
-            System.out.println("Average time: " + statistic.getAverageTime() + "ms");
+            System.out.println("Average time: " + statistic.getAverageTime() + " ms");
             System.out.println("Lost: " + statistic.getReched() + "%");
             System.out.println("==================================");
 
