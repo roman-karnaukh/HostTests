@@ -17,7 +17,7 @@ public class HostUtils {
     public static PingResult checkPing(String link) throws IOException {
         long starTime;
         long execTime = 0;
-        URL url = null;
+        URL url;
 
         boolean isReachable = false;
 
@@ -29,6 +29,7 @@ public class HostUtils {
 
             starTime = System.currentTimeMillis();
             urlc.connect();
+
             execTime = System.currentTimeMillis() - starTime;
             urlc.disconnect();
 

@@ -2,27 +2,41 @@ package tests;
 
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
-
 /**
  * Created by user on 03.02.2017.
  */
 public class PingHost extends Runner {
 
+    enum constants {
+        REQUEST_COUNT,
+        archer,
+        dou,
+        google;
+
+        public String s(){
+            return property.get(this.name());
+        }
+
+        public int i(){
+            return  Integer.valueOf(property.get(this.name()));
+        }
+    };
+
+    int attempts = constants.REQUEST_COUNT.i();
+
     @Test
-    public void pingArcher() throws IOException {
-        testExecutor.pingHost("http://www.archer-soft.com/ru/", 20);
+    public void pingArcher() {
+        testExecutor.pingHost(constants.archer.s(), attempts);
     }
 
     @Test
-    public void pingDou() throws IOException {
-        testExecutor.pingHost("https://dou.ua/", 20);
+    public void pingDou() {
+        testExecutor.pingHost(constants.dou.s(), attempts);
     }
 
     @Test
-    public void pingGoogle() throws IOException {
-        testExecutor.pingHost("https://www.google.com.ua/", 20);
+    public void pingGoogle() {
+        testExecutor.pingHost(constants.google.s(), attempts);
     }
 
 }

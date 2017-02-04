@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Runner {
 
     Assertion assertion;
-    PropertyWorker property = new PropertyWorker();
+    static PropertyWorker property = new PropertyWorker();
 
     TestExecutor testExecutor;
 

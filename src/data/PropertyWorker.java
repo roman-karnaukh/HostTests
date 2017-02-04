@@ -25,10 +25,15 @@ public class PropertyWorker {
         }
     }
 
+    public Properties getInstance(){
+        return property;
+    }
+
 
     public String get(String key){
         return property.get(key).toString();
     }
+
 
     public void add(String key, String value){
         property.put(key, value);
